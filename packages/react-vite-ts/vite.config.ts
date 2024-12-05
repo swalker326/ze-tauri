@@ -13,5 +13,20 @@ const mfConfig = {
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), withZephyr({ mfConfig })]
+  plugins: [react(), withZephyr({ mfConfig })],
+  build: {
+    target: "chrome89",
+    modulePreload: {
+      resolveDependencies: (_, deps: string[]) => {
+        // Only preload React packages and non-federated modules
+        return deps.filter((dep) => {
+          const isReactPackage =
+            dep.includes("react") || dep.includes("react-dom");
+          const isNotRemoteEntry = !dep.includes("remoteEntry.js");
+
+          return isReactPackage && isNotRemoteEntry;
+        });
+      }
+    }
+  }
 });

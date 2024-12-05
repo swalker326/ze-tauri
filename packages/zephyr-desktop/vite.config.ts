@@ -10,6 +10,7 @@ const mfConfig = {
   filename: "remoteEntry.js",
   remotes: {
     "vite-remote": {
+      name: "vite-remote",
       entry: "http://localhost:5174/remoteEntry.js",
       type: "module"
     }
@@ -26,7 +27,7 @@ const mfConfig = {
 
 // https://vitejs.dev/config/
 export default defineConfig(async () => ({
-  plugins: [react(), withZephyr()],
+  plugins: [react(), withZephyr({ mfConfig })],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src")
@@ -53,5 +54,8 @@ export default defineConfig(async () => ({
       // 3. tell vite to ignore watching `src-tauri`
       ignored: ["**/src-tauri/**"]
     }
+  },
+  build: {
+    target: "chrome89"
   }
 }));

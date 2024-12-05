@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { Button } from "./components/ui/button";
+//@ts-expect-error - its there
+import RemoteApp from "vite-remote/App";
 
 function App() {
 	const [greetMsg, setGreetMsg] = useState("");
@@ -15,6 +17,10 @@ function App() {
 		<main className="container">
 			<h1>Welcome to Tauri + React</h1>
 			<p>Click on the Tauri, Vite, and React logos to learn more.</p>
+			<div className="border border-red-500 w-full min-h-10">
+				<h1>remote app</h1>
+				<RemoteApp />
+			</div>
 
 			<form
 				className="row"
